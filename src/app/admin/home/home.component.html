@@ -1,0 +1,401 @@
+<div class="flex-container me-2 container-fluid border">
+  <div>
+    <div
+      class="d-flex flex-grow-1 flex-column flex-shrink-0 p-3 text-white bg-dark container-fluid border"
+      style="width: 200px; height: 100vh"
+    >
+      <div>
+        <img
+          src="https://github.com/mdo.png"
+          alt=""
+          width="82"
+          height="82"
+          class="rounded-circle me-2"
+        />
+      </div>
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span>Dashboard</span>
+      <p
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+      ></p>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <p
+            href="#"
+            class="nav-link active"
+            aria-current="page"
+            (click)="getUser()"
+          >
+            User
+          </p>
+        </li>
+        <li>
+          <a href="#" class="nav-link text-white">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Dashboard
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="nav-link text-white">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#table"></use>
+            </svg>
+            Orders
+          </a>
+        </li>
+      </ul>
+      <hr />
+    </div>
+  </div>
+
+  <div >
+    <div class="navbar navbar-expand navbar-dark bg-dark ms-5">
+      <div class="container-fluid border" style="width: 800px">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a routerLink="/admin/products" class="nav-link"
+              >Bonjour {{ user.first_name }} {{ user.last_name }}
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li>
+            <a class="nav-link"> {{ user.status }} </a>
+          </li>
+          <li>
+            <a class="btn nav-link">
+              <i class="bi bi-box-arrow-right" (click)="doLogout()"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="user-list mt-5 ms-5">
+      <div class="user-list">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-body text-center">
+            <table class="table-user-list table table-striped-columns m-1">
+              <thead>
+                <tr>
+                  <td scope="col" class="col-md-2">Prénom</td>
+                  <td scope="col" class="col-md-2">Nom</td>
+                  <td scope="col" class="col-md-1">Genre</td>
+                  <td scope="col" class="col-md-1">Addresse</td>
+                  <td scope="col" class="col-md-2">Date de naissance</td>
+                  <td scope="col" class="col-md-1">Status</td>
+                  <td scope="col" class="col-md-1">Actif</td>
+                  <td class="col-md-1"></td>
+                  <td class="col-md-1">
+                    <span class="text-danger">
+                      Supprimer
+                    </span>
+                  </td>
+                  <td >
+                    <span class="text-success">
+                      modifier
+                    </span>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let u of users">
+                  <td>{{ u.first_name }}</td>
+                  <td>{{ u.last_name }}</td>
+                  <td>{{ u.gender }}</td>
+                  <td>{{ u.address }}</td>
+                  <td>{{ u.birthDate | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ u.status }}</td>
+                  <td>
+                    <span *ngIf="u.actif; else inactif">
+                      <span class="bi bi-check-circle text-success"></span>
+                    </span>
+                    <ng-template #inactif>
+                      <span class="bi bi-x-circle text-danger"></span>
+                    </ng-template>
+                  </td>
+                  <td>
+                    <button class="btn">
+                      <span></span>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger" (click)="handleDeleteUser(u)" [disabled]="u.status === 'admin'">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-success" (click)="handleEditUser(u)">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    <div class="card-header" *ngIf="user">
+      <p>Bonjour {{ user.first_name }} {{ user.last_name }}</p>
+      <a class="btn nav-link">
+        <i class="bi bi-box-arrow-right" (click)="doLogout()"></i>
+      </a>
+    </div>
+    <div class="contenu">
+      <div
+        class="d-flex flex-grow-2 alert alert-success"
+        *ngIf="!showDivCreateUser"
+        id="showDiv"
+      >
+        <table class="table">
+          <thead>
+            <tr>
+              <td>First Name</td>
+              <td>Last Name</td>
+              <td>Gender</td>
+              <td>Adress</td>
+              <td>Birth Date</td>
+              <td>Status</td>
+              <td>Actif</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users">
+              <td>{{ u.first_name }}</td>
+              <td>{{ u.last_name }}</td>
+              <td>{{ u.gender }}</td>
+              <td>{{ u.adress }}</td>
+              <td>{{ u.birthDate }}</td>
+              <td>{{ u.status }}</td>
+              <td>{{ u.actif }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>-->
+  </div>
+</div>
+
+<!--
+
+
+
+<div class="d-flex">
+  <div class="d-flex flex-grow-1 flex-column flex-shrink-0 p-3 text-white bg-dark side-bar" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#home"></use>
+          </svg>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#speedometer2"></use>
+          </svg>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" routerLink="#" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          User
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="getUser()">Users</a></li>
+          <li><a class="dropdown-item" (click)="createUser()">Create a user</a></li>
+
+        </ul>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#table"></use>
+          </svg>
+          Orders
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#grid"></use>
+          </svg>
+          Products
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16">
+            <use xlink:href="#people-circle"></use>
+          </svg>
+          Customers
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>mdo</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container d-flex flex-grow-1 flex-row">
+
+    <div class="card-header" *ngIf="user">
+      <p>Bonjour {{user.first_name}} {{user.last_name}} </p>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="d-flex flex-grow-2 alert alert-success" style="width: 800px; margin-left: 600px; " *ngIf="!showDivCreateUser"
+  id="showDiv" >
+
+  <table class="table" >
+    <thead>
+      <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Gender</td>
+        <td>Adress</td>
+        <td>Birth Date</td>
+        <td>Status</td>
+        <td>Actif</td>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{u.first_name}}</td>
+        <td>{{u.last_name}}</td>
+        <td>{{u.gender}}</td>
+        <td>{{u.adress}}</td>
+        <td>{{u.birthDate}}</td>
+        <td>{{u.status}}</td>
+        <td>{{u.actif}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<div class="user-create"  *ngIf="showDivCreateUser" >
+  <h3>Create a new user</h3>
+<form [formGroup]="userForm" (ngSubmit)="submit()">
+  <div >
+    <label for="first_name" class="form-label">First name</label>
+    <input type="text" class="form-control"  formControlName="first_name"      id="first_name" value="" required>
+  </div>
+  <div >
+    <label for="last_name" class="form-label">Last name</label>
+    <input type="text" class="form-control" formControlName="last_name" id="last_name" value="" required>
+  </div>
+  <div >
+    <label  class="form-label">Gender</label>
+    <select for="gender" class="form-select" id="gender" formControlName="gender" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="male"   id="gender" for="gender">Male</option>
+      <option value="female"   id="gender" for="gender">Female</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label"  for="email">Email address</label>
+    <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" for="email">
+  </div>
+
+  <div>
+    <label for="adress" class="form-label">Adresse</label>
+    <input type="text" class="form-control" id="adress" required  formControlName="adress">
+  </div>
+
+  <div>
+    <label for="birthDate" class="form-label" >Birth Date</label>
+    <input type="date" class="form-control" id="birthDate" required for="birthDate" formControlName="birthDate">
+  </div>
+
+  <div>
+    <label for="gsm" class="form-label">GSM</label>
+    <input type="text" class="form-control" id="gsm" required  formControlName="gsm">
+  </div>
+
+
+  <div >
+    <label  class="form-label">Status</label>
+    <select for="status" class="form-select" id="status" formControlName="status" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="admin"   id="status" for="status">Admin</option>
+      <option value="member"   id="status" for="status">Member</option>
+    </select>
+  </div>
+  <div >
+    <label  class="form-label" for="grade">Grade</label>
+    <select class="form-select" id="grade" for="grade" formControlName="grade" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="0 CAP" id="grade" for="grade" >0 cap</option>
+      <option value="1er CAP" id="grade" for="grade" >1er cap</option>
+    </select>
+  </div>
+
+
+
+  <div class="col-12">
+    <label class="form-check-label" for="actif">
+      Actif
+    </label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="iactif" formControlName="actif" required>
+    </div>
+  </div>
+
+
+
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+
+
+
+
+
+
+
+
+</form>
+</div>
+
+-->

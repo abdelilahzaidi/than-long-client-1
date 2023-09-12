@@ -1,0 +1,35 @@
+
+admin
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-body">
+        <table class="table" *ngIf="user">
+          <thead>
+            <tr>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Gender</td>
+                  <td>Adress</td>
+                  <td>Birth Date</td>
+                  <td>Status</td>
+                  <td>Actif</td>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{user.first_name}}</td>
+              <td>{{user.last_name}}</td>
+              <td>{{user.gender}}</td>
+              <td>{{user.adress}}</td>
+              <td>{{user.birthDate}}</td>
+              <td>{{user.status}}</td>
+              <td>{{user.actif}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

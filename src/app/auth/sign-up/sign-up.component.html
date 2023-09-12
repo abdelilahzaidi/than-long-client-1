@@ -1,0 +1,84 @@
+<h3>Register</h3>
+<form [formGroup]="userForm" (ngSubmit)="submit()">
+  <div >
+    <label for="first_name" class="form-label">First name</label>
+    <input type="text" class="form-control"  formControlName="first_name"      id="first_name" value="" required>
+  </div>
+  <div >
+    <label for="last_name" class="form-label">Last name</label>
+    <input type="text" class="form-control" formControlName="last_name" id="last_name" value="" required>
+  </div>
+  <div >
+    <label  class="form-label">Gender</label>
+    <select for="gender" class="form-select" id="gender" formControlName="gender" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="male"   id="gender" for="gender">Male</option>
+      <option value="female"   id="gender" for="gender">Female</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label"  for="email">Email address</label>
+    <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" for="email">
+  </div>
+
+  <div>
+    <label for="adress" class="form-label">Adresse</label>
+    <input type="text" class="form-control" id="adress" required  formControlName="adress">
+  </div>
+
+  <div>
+    <label for="birthDate" class="form-label" >Birth Date</label>
+    <input type="date" class="form-control" id="birthDate" required for="birthDate" formControlName="birthDate">
+  </div>
+
+  <div>
+    <label for="gsm" class="form-label">GSM</label>
+    <input type="text" class="form-control" id="gsm" required  formControlName="gsm">
+  </div>
+
+
+  <div >
+    <label  class="form-label">Status</label>
+    <select for="status" class="form-select" id="status" formControlName="status" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="admin"   id="status" for="status">Admin</option>
+      <option value="member"   id="status" for="status">Member</option>
+    </select>
+  </div>
+  <div >
+    <label  class="form-label" for="grade">Grade</label>
+    <select class="form-select" id="grade" for="grade" formControlName="grade" required>
+      <option selected disabled value="">Choose...</option>
+      <option value="0 CAP" id="grade" for="grade" >0 cap</option>
+      <option value="1er CAP" id="grade" for="grade" >1er cap</option>
+    </select>
+  </div>
+
+
+
+  <div class="col-12">
+    <label class="form-check-label" for="actif">
+      Actif
+    </label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="iactif" formControlName="actif" required>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password"  formControlName="password">
+  </div>
+
+  <div class="mb-3">
+    <label for="password_confirm" class="form-label">Password Confirm</label>
+    <input type="password" class="form-control" id="password_confirm" formControlName="password_confirm">
+  </div>
+
+
+
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
