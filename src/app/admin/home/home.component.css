@@ -1,31 +1,43 @@
 .flex-container {
   display: flex;
-  height: 100vh;
-
+  align-items: stretch;
+  background-color: #f1f1f1;
 }
+
 .flex-container > div {
-
+  background-color: DodgerBlue;
+  color: white;
+  margin: 1px;
   text-align: center;
+  line-height: 75px;
+  font-size: 20px;
+  height: 100vh;
+}
 
-
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column;
+  }
 }
 
 
-.barreHight{
-  background-color: red;
-  height: 80px;
-}
+.team-list{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(114, 173, 221);
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 2px;
+  width:40%;
 
-table
-{
-  margin-left:20px;
-  margin-right:20px;
 }
-
 tr{
-  border-color: rgb(1, 1, 10);
+  height: 5px;
 }
 
-thead > td{
-  background-color: brown;
-}
+
+
+
+
+
+

@@ -1,10 +1,153 @@
+<!-- home.component.html -->
+
+<div class="flex-container">
+  <div class="btn-group-vertical" style="flex-grow: 1; margin-top: 1px; width: 25px; ">
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px; ;" (click)="showUsers()">Utilisateurs</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showRoles()">Roles</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showTeams()">Équipes</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px; ;" (click)="showUsers()">Cours</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px; ;" (click)="showUsers()">Programmes</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px; ;" (click)="showUsers()">Grades</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showRoles()">Periodes</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showTeams()">Tâches</button>
+    <!-- ... Ajoutez des gestionnaires d'événements pour d'autres boutons ... -->
+  </div>
+  <div class="flex-container">
+    <div class="btn-group-vertical" style="flex-grow: 1; margin-top: 1px; width: 25px;">
+      <!-- Vos boutons ici -->
+    </div>
+    <div style="flex-grow: 3; ">
+      <div *ngIf="showUserList">
+        <div class="card">
+          <div class="card-header">
+            Liste des utilisateurs
+          </div>
+          <div class="card-body">
+            <table class="table table-striped-columns m-1">
+              <!-- Contenu de la liste des utilisateurs -->
+
+              <tbody>
+                <tr *ngFor="let u of users">
+                  <td>{{ u.first_name }} {{ u.last_name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showRoleList">
+        <div class="card">
+          <div class="card-header">
+            Liste des rôles
+          </div>
+          <div class="card-body">
+            <table class="table table-striped-columns m-1">
+              <!-- Contenu de la liste des rôles -->
+
+
+              <tbody>
+                <tr *ngFor="let role of roleList">
+                  <td>{{ role.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showTeamList">
+        <div class="card">
+          <div class="card-header">
+            Liste des équipes
+          </div>
+          <div class="card-body">
+            <table class="table table-striped-columns m-1">
+              <!-- Contenu de la liste des équipes -->
+
+              <tbody>
+                <tr *ngFor="let team of teamList">
+                  <td>{{ team.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="flex-grow:3;">
+
+    <div class="navbar  navbar-dark  " >
+      <div class="container-fluid border bg-dark" style="width: 400px; border-radius: 20px;  margin-right: 110px;">
+        <ul class="navbar-nav" style="margin-left:40px;">
+          <li class="nav-item">
+            <a routerLink="/admin/products" class="nav-link"
+              >Bonjour {{ user.first_name }} {{ user.last_name }}
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav " style="margin-right:10px; display: flex;
+        flex-direction: row;">
+          <li>
+            <a class="nav-link"> {{ user.status }} </a>
+          </li>
+          <li>
+            <a class="btn nav-link m-4">
+              <i class="bi bi-box-arrow-right" (click)="doLogout()"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <div class="flex-container me-2 container-fluid border">
   <div>
     <div
       class="d-flex flex-grow-1 flex-column flex-shrink-0 p-3 text-white bg-dark container-fluid border"
       style="width: 200px; height: 100vh"
     >
-      <div>
+      <div class="flex-container-1 me-2 container-fluid border">
         <img
           src="https://github.com/mdo.png"
           alt=""
@@ -51,6 +194,9 @@
         </li>
       </ul>
       <hr />
+    </div>
+    <div >
+      papapapa
     </div>
   </div>
 
@@ -144,6 +290,12 @@
       </div>
     </div>
 
+
+
+    <div>
+      <p>Edit</p>
+    </div>
+
     <!--
     <div class="card-header" *ngIf="user">
       <p>Bonjour {{ user.first_name }} {{ user.last_name }}</p>
@@ -183,8 +335,8 @@
         </table>
       </div>
     </div>-->
-  </div>
-</div>
+<!-- </div>-->
+<!-- </div>-->
 
 <!--
 
@@ -399,3 +551,6 @@
 </div>
 
 -->
+
+
+

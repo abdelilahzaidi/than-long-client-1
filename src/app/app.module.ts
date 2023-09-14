@@ -17,6 +17,7 @@ import { AdminModule } from './admin/admin.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { AdminModule } from './admin/admin.module';
     UsersModule,
     AdminModule,
     HttpClientModule
+   
 
   ],
   providers: [

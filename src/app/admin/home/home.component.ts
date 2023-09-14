@@ -4,58 +4,92 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  showUserList = false;
+  showTeamList = false;
+  showRoleList = false;
+  // Déclarez des tableaux pour stocker les données des utilisateurs, des équipes, etc.
+  userList: string[] = [];
+  teamList: any[] = [];
+  roleList: any[] = [];
+  user: any;
+  users: any[] = [];
+  role: any;
+  roles: any[] = [];
+
   errorMessage!: string;
   constructor(
-    private httpClient : HttpClient,
-    private fb : FormBuilder,
-    private userService : UserService,
+    private httpClient: HttpClient,
+    private fb: FormBuilder,
+    private userService: UserService,
     private router: Router
-    ){}
-  response$ :any;
-user :any
-users: any[] = []
-showDivCreateUser =false
-currentAction! :string;
+  ) {}
+  response$: any;
+
+  currentAction!: string;
   ngOnInit(): void {
-    this.httpClient.get<any[]>('http://localhost:3001/auth/user').subscribe((data) => {
-    this.user = data
-  })
-  this.getUser();
+    this.httpClient
+      .get<any[]>('http://localhost:3001/auth/user')
+      .subscribe((data) => {
+        this.user = data;
+      });
+    this.getUser();
 
   }
 
+  userForm: FormGroup = this.fb.group({
+    first_name: [''],
+    last_name: [''],
+    gender: [''],
+    email: [''],
+    adress: [''],
+    birthDate: [''],
+    actif: [''],
+    gsm: [''],
+    grade: [''],
+    status: [''],
+  });
+  apiUrl = 'http://localhost:3001';
+  getUser() {
+    return this.httpClient.get(this.apiUrl + '/user').subscribe({
+      next: (data) => {
+        this.users = data as [];
+        console.log('user', this.user);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
-  userForm : FormGroup = this.fb.group({
-    first_name:[''],
-    last_name:[''],
-    gender:[''],
-    email:[''],
-    adress:[''],
-    birthDate:[''],
-    actif:[''],
-    gsm:[''],
-    grade:[''],
-    status:['']
-  })
-  apiUrl='http://localhost:3001'
-  getUser(){
-    this.showDivCreateUser = false
-      return this.httpClient.get(this.apiUrl+'/user').subscribe({
-        next :(data)=>{
-          this.users=data as [];
-          console.log('user',this.user)
-        },
-        error : (err)=>{
-          console.log(err);
-        }
-      })
+  getRole() {
+    return this.httpClient.get(this.apiUrl + '/role').subscribe({
+      next: (data) => {
+        this.roles = data as [];
+        console.log('role', this.role);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+
+  getTeam() {
+    return this.httpClient.get(this.apiUrl + '/role').subscribe({
+      next: (data) => {
+        this.roles = data as [];
+        console.log('role', this.role);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   // async createUser() {
@@ -80,30 +114,66 @@ currentAction! :string;
   doLogout() {
     localStorage.removeItem('token');
     this.router.navigate(['auth/login']);
-    console.log('logout')
+    console.log('logout');
   }
 
   handleDeleteUser(u: any) {
-    let conf = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")
-    if(conf ==false) return;
-    this.currentAction="handleDeleteUser";
+    let conf = confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');
+    if (conf == false) return;
+    this.currentAction = 'handleDeleteUser';
     this.userService.deleteUser(u.id).subscribe({
-      next : (data)=>{
-        let index=this.users.indexOf(u);
-        this.users.splice(index,1);
+      next: (data) => {
+        let index = this.users.indexOf(u);
+        this.users.splice(index, 1);
       },
-      error : err => {
-        this.errorMessage=err.error;
-      }
-    }
-    );
+      error: (err) => {
+        this.errorMessage = err.error;
+      },
+    });
+  }
+
+  handleEditUser(u: any) {
+    console.log(u.id);
+    this.router.navigateByUrl('user-edit');
+  }
+  showUsers() {
+    this.httpClient
+      .get<any[]>('http://localhost:3001/user')
+      .subscribe((data) => {
+        // Assurez-vous que 'data' contient les données réelles des utilisateurs
+        this.userList = data;
+        this.showUserList = true;
+        this.showTeamList = false;
+      });
   }
 
 
-  handleEditUser(u:any) {
-    console.log(u.id)
-    this.router.navigateByUrl("");
+
+  // ...
+
+  showRoles() {
+    console.log('Roles');
+    this.httpClient
+      .get<any[]>('http://localhost:3001/role')
+      .subscribe((data) => {
+        // Assurez-vous que 'data' contient les données réelles des rôles
+        this.roleList = data;
+        console.log('Roles', this.roleList);
+        this.showRoleList = true;
+        this.showUserList = false;
+      });
   }
 
-
+  showTeams() {
+    this.httpClient
+    .get<any[]>('http://localhost:3001/team')
+    .subscribe((data) => {
+      // Assurez-vous que 'data' contient les données réelles des rôles
+      this.teamList = data;
+      console.log('Team', this.teamList);
+      this.showTeamList = true;
+      this.showRoleList = false;
+      this.showUserList = false;
+    });
+  }
 }

@@ -1,3 +1,4 @@
+<!--
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-2">
   <div class="container-fluid border text-light">
     <a class="navbar-brand" routerLink="#">Than Long</a>
@@ -28,5 +29,47 @@
     </div>
   </div>
 </nav>
+-->
+<nav class="navbar navbar-expand-lg bg-primary" style="height:120px;" data-bs-theme="dark">
+  <div class="container-fluid">
+    <img style="font-size:50px; margin-bottom:5px; margin-top:5px;"
+    width="50"
+
+    alt="dargon Logo"
+    src="/assets/images/image_nav_bar/dragon_nav_bar.png"
+  />
+    <a class="navbar-brand ms-3" style="font-size:50px; margin-bottom:5px; margin-top:5px;">Than Long</a>
+
+    <div class="collapse navbar-collapse " id="navbarColor01" style="margin-top:80px; margin-left: 120px;">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Accueil
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Le vovinam</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Team</a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto"> <!-- Utilisez ml-auto ici -->
+        <li class="nav-item dropdown me-5 d-flex">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false" *ngIf="!isLoggedIn()">Espace personnel</a>
+          <div class="dropdown-menu bg-primary" style="margin-left:-15px; ">
+            <a class="dropdown-item" routerLink="auth/login">Login</a>
+            <a class="dropdown-item" routerLink="auth/register">Register</a>
+            <div class="dropdown-divider">
+
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 
 <router-outlet></router-outlet>
