@@ -10,6 +10,7 @@ import { UserService } from '../service/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  showUser=false;
   showUserList = false;
   showTeamList = false;
   showRoleList = false;
@@ -117,6 +118,21 @@ export class HomeComponent {
     console.log('logout');
   }
 
+  getUserById(u:any){
+    this.userService.getUserById(u.id).subscribe({
+      next: (data) => {
+        this.user=data
+        this.showUser =!this.showUser;
+        console.log(this.user)
+      },
+      error: (err) => {
+        this.errorMessage = err.error;
+      },
+    })
+
+
+  }
+
   handleDeleteUser(u: any) {
     let conf = confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');
     if (conf == false) return;
@@ -142,7 +158,7 @@ export class HomeComponent {
       .subscribe((data) => {
         // Assurez-vous que 'data' contient les données réelles des utilisateurs
         this.userList = data;
-        this.showUserList = true;
+        this.showUserList = !this.showUserList;
         this.showTeamList = false;
       });
   }

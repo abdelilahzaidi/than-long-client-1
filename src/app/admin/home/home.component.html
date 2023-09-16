@@ -1,7 +1,7 @@
 <!-- home.component.html -->
 
 <div class="flex-container">
-  <div class="btn-group-vertical" style="flex-grow: 1; margin-top: 1px; width: 25px; ">
+  <div class="btn-group-vertical" style="flex-grow: 1; margin-top: 1px; width: 10%; height: 100vh; ">
     <button type="button" class="btn btn-primary" style="margin-bottom: 2px; ;" (click)="showUsers()">Utilisateurs</button>
     <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showRoles()">Roles</button>
     <button type="button" class="btn btn-primary" style="margin-bottom: 2px;" (click)="showTeams()">Équipes</button>
@@ -13,13 +13,11 @@
     <!-- ... Ajoutez des gestionnaires d'événements pour d'autres boutons ... -->
   </div>
   <div class="flex-container">
-    <div class="btn-group-vertical" style="flex-grow: 1; margin-top: 1px; width: 25px;">
-      <!-- Vos boutons ici -->
-    </div>
+
     <div style="flex-grow: 3; ">
       <div *ngIf="showUserList">
-        <div class="card">
-          <div class="card-header">
+        <div class="card" style="height: 100vh;">
+          <div class="card-header" style="background-color: aquamarine;">
             Liste des utilisateurs
           </div>
           <div class="card-body">
@@ -27,9 +25,16 @@
               <!-- Contenu de la liste des utilisateurs -->
 
               <tbody>
-                <tr *ngFor="let u of users">
-                  <td>{{ u.first_name }} {{ u.last_name }}</td>
+                <tr *ngFor="let u of users" (click)="getUserById(u)">
+                  <td >{{ u.first_name }} {{ u.last_name }}</td>
+                  <td>
+                    <button class="btn btn-danger" (click)="handleDeleteUser(u)" [disabled]="u.status === 'admin'">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
                 </tr>
+
+
               </tbody>
             </table>
           </div>
@@ -81,7 +86,7 @@
   <div style="flex-grow:3;">
 
     <div class="navbar  navbar-dark  " >
-      <div class="container-fluid border bg-dark" style="width: 400px; border-radius: 20px;  margin-right: 110px;">
+      <div class="container-fluid border bg-dark" style="width: 90%; border-radius: 5px;   margin-left: 45px; margin-right: 10px;" >
         <ul class="navbar-nav" style="margin-left:40px;">
           <li class="nav-item">
             <a routerLink="/admin/products" class="nav-link"
@@ -100,6 +105,31 @@
             </a>
           </li>
         </ul>
+
+      </div>
+      <div *ngIf="showUser"  style="width:90%;   margin-right: 10px; margin-left: 45px; margin-top: 20px;">
+        <p style="margin: -10px;" >
+          Informations personnelles
+        </p>
+        <div class="card" >
+
+          <div class="card-body" >
+
+                   <p>{{ user.first_name }}</p>
+                  <p>{{ user.last_name }}</p>
+                  <p>{{ user.gender }}</p>
+                  <p>{{ user.address }}</p>
+                  <p>{{user.birthDate | date: 'yyyy-MM-dd' }}</p>
+                  <p>{{ user.status }}</p>
+                  <div>
+                    <p>Modifier les informations</p>
+                    <button class="btn btn-success" (click)="handleEditUser(user)">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                  </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>

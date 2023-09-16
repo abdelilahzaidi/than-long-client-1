@@ -12,6 +12,12 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  getUserById(id: any) {
+    return this.http.get(this.apiUrl + '/user/' + id, {
+      responseType: 'json',
+    });
+  }
+
   deleteUser(id: any) {
     return this.http.delete(this.apiUrl + '/user/' + id, {
       responseType: 'json',
