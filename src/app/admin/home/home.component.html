@@ -107,28 +107,70 @@
         </ul>
 
       </div>
-      <div *ngIf="showUser"  style="width:90%;   margin-right: 10px; margin-left: 45px; margin-top: 20px;">
-        <p style="margin: -10px;" >
-          Informations personnelles
-        </p>
+
+
+
+
+
+
+
+
+
+
+
+
+      <div *ngIf="showUser"  style="width:90%;   margin-right: 10px; margin-left: 45px; margin-top: 20px;" (click)="getUserById(user)">
+
         <div class="card" >
 
-          <div class="card-body" >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <table class="table">
+                  <tr>
+                    <th>Nom</th>
+                    <td>{{ user.first_name }}</td>
+                  </tr>
+                  <tr>
+                    <th>Prénom</th>
+                    <td>{{ user.last_name }}</td>
+                  </tr>
+                  <tr>
+                    <th>Genre</th>
+                    <td>{{ user.gender }}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <table class="table">
+                  <tr>
+                    <th>Adresse</th>
+                    <td>{{ user.address }}</td>
+                  </tr>
+                  <tr>
+                    <th>Date de naissance</th>
+                    <td>{{ user.birthDate | date: 'yyyy-MM-dd' }}</td>
+                  </tr>
+                  <tr>
+                    <th>Statut</th>
+                    <td>{{ user.status }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <div style="display:flex" >
+                <div><p class="me-5">Modifier les informations</p></div>
+                <div><button class="btn btn-success" (click)="handleEditUser(user)">
+                  <i class="bi bi-pencil-fill"></i>
+                </button></div>
+              </div>
+            </div>
 
-                   <p>{{ user.first_name }}</p>
-                  <p>{{ user.last_name }}</p>
-                  <p>{{ user.gender }}</p>
-                  <p>{{ user.address }}</p>
-                  <p>{{user.birthDate | date: 'yyyy-MM-dd' }}</p>
-                  <p>{{ user.status }}</p>
-                  <div>
-                    <p>Modifier les informations</p>
-                    <button class="btn btn-success" (click)="handleEditUser(user)">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                  </div>
 
           </div>
+
+
         </div>
       </div>
     </div>

@@ -122,13 +122,17 @@ export class HomeComponent {
     this.userService.getUserById(u.id).subscribe({
       next: (data) => {
         this.user=data
-        this.showUser =!this.showUser;
-        console.log(this.user)
+        //this.showUser =!this.showUser;
+        console.log("id",this.user.id," ",u.id)
+        if(!this.user.id !==u.id){
+          this.showUser =true;
+        }
       },
       error: (err) => {
         this.errorMessage = err.error;
       },
     })
+    console.log("Hello")
 
 
   }
@@ -160,6 +164,10 @@ export class HomeComponent {
         this.userList = data;
         this.showUserList = !this.showUserList;
         this.showTeamList = false;
+        if(this.showUser===true){
+          this.showUserList=false
+          this.showUser=false
+        }
       });
   }
 
