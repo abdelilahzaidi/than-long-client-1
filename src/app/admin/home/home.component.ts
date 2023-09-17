@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 
@@ -9,11 +9,12 @@ import { UserService } from '../service/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   showUser=false;
   showUserList = false;
   showTeamList = false;
   showRoleList = false;
+  showCreateUserDiv=false;
   // Déclarez des tableaux pour stocker les données des utilisateurs, des équipes, etc.
   userList: string[] = [];
   teamList: any[] = [];
@@ -22,14 +23,37 @@ export class HomeComponent {
   users: any[] = [];
   role: any;
   roles: any[] = [];
-
+  userForm: FormGroup;
   errorMessage!: string;
   constructor(
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) {
+    this.userForm = this.fb.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      gender: ['', Validators.required],
+      email: ['', Validators.required],
+      address: [''], // Corrigez le nom de l'attribut "adress" en "address"
+      birthDate: [''],
+      actif: [false], // Utilisez un booléen pour actif
+      gsm: [''],
+      grade: ['', Validators.required],
+      status: ['', Validators.required],
+    })
+  }
+
+
+
+
+
+
+
+
+
+
   response$: any;
 
   currentAction!: string;
@@ -43,18 +67,18 @@ export class HomeComponent {
 
   }
 
-  userForm: FormGroup = this.fb.group({
-    first_name: [''],
-    last_name: [''],
-    gender: [''],
-    email: [''],
-    adress: [''],
-    birthDate: [''],
-    actif: [''],
-    gsm: [''],
-    grade: [''],
-    status: [''],
-  });
+  // userForm: FormGroup = this.fb.group({
+  //   first_name: [''],
+  //   last_name: [''],
+  //   gender: [''],
+  //   email: [''],
+  //   adress: [''],
+  //   birthDate: [''],
+  //   actif: [''],
+  //   gsm: [''],
+  //   grade: [''],
+  //   status: [''],
+  // });
   apiUrl = 'http://localhost:3001';
   getUser() {
     return this.httpClient.get(this.apiUrl + '/user').subscribe({
@@ -93,24 +117,7 @@ export class HomeComponent {
     });
   }
 
-  // async createUser() {
-  //   this.showDivCreateUser =true
-  // }
-  // async submit() {
-  //   console.log('user / submit', this.userForm.value);
 
-  //   this.userService.createUser(this.userForm.value)
-  //     .subscribe(
-  //       (res) => {
-  //         console.log('Réponse du serveur :', res);
-  //         this.response$ = res; // Si vous avez besoin de stocker la réponse
-  //       },
-  //       (error) => {
-  //         console.error('Une erreur s\'est produite lors de la requête :', error);
-  //         // Traitez l'erreur comme vous le souhaitez ici
-  //       }
-  //     );
-  // }
 
   doLogout() {
     localStorage.removeItem('token');
@@ -164,9 +171,11 @@ export class HomeComponent {
         this.userList = data;
         this.showUserList = !this.showUserList;
         this.showTeamList = false;
+        this.showCreateUserDiv=false;
         if(this.showUser===true){
           this.showUserList=false
-          this.showUser=false
+          this.showUser=false;
+          this.showCreateUserDiv=false;
         }
       });
   }
@@ -185,6 +194,7 @@ export class HomeComponent {
         console.log('Roles', this.roleList);
         this.showRoleList = true;
         this.showUserList = false;
+        this.showCreateUserDiv=false;
       });
   }
 
@@ -198,6 +208,51 @@ export class HomeComponent {
       this.showTeamList = true;
       this.showRoleList = false;
       this.showUserList = false;
+      this.showCreateUserDiv=false;
     });
   }
-}
+
+
+
+  showCreateUser(){
+    this.showCreateUserDiv=true;
+    console.log('Hi')
+
+  }
+
+  // async submit() {
+  //   console.log('user / submit', this.userForm.value);
+
+  //   this.userService.createUser(this.userForm.value)
+  //     .subscribe(
+  //       (res) => {
+  //         console.log('Réponse du serveur :', res);
+  //         this.response$ = res; // Si vous avez besoin de stocker la réponse
+  //       },
+  //       (error) => {
+  //         console.error('Une erreur s\'est produite lors de la requête :', error);
+  //         // Traitez l'erreur comme vous le souhaitez ici
+  //       }
+  //     );
+  //   }
+
+
+  createUser() {
+    console.log('Hi create user')
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      this.userService.createUser(this.userForm.value).subscribe(
+        (res) => {
+          console.log('Réponse du serveur :', res);
+          // Réinitialisez le formulaire après la création réussie
+          this.userForm.reset();
+          // Vous pouvez également afficher un message de succès à l'utilisateur ici
+        },
+        (error) => {
+          console.error('Une erreur s\'est produite lors de la requête :', error);
+          // Traitez l'erreur comme vous le souhaitez ici
+        }
+      );
+    }
+  }
+  }

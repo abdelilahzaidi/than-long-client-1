@@ -13,6 +13,7 @@ import { AuthInterceptorService } from './auth/authInterceptorService';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthGuardAdmin } from './guards/auth-admin.guard';
 import { AdminModule } from './admin/admin.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -28,8 +29,9 @@ import { AdminModule } from './admin/admin.module';
     AppRoutingModule,
     UsersModule,
     AdminModule,
-    HttpClientModule
-   
+    HttpClientModule,
+    ReactiveFormsModule
+
 
   ],
   providers: [
