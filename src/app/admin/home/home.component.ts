@@ -10,19 +10,23 @@ import { UserService } from '../service/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit{
+
+  showCourList=false
   showUser=false;
   showUserList = false;
   showTeamList = false;
-  showRoleList = false;
+  showProgramList = false;
   showCreateUserDiv=false;
   // Déclarez des tableaux pour stocker les données des utilisateurs, des équipes, etc.
   userList: string[] = [];
   teamList: any[] = [];
-  roleList: any[] = [];
+  programList: any[] = [];
+  courList: any[] = [];
   user: any;
   users: any[] = [];
-  role: any;
-  roles: any[] = [];
+  program: any;
+  programs: any[] = [];
+  cours: any[] = [];
   userForm: FormGroup;
   errorMessage!: string;
   constructor(
@@ -36,7 +40,7 @@ export class HomeComponent implements OnInit{
       last_name: ['', Validators.required],
       gender: ['', Validators.required],
       email: ['', Validators.required],
-      address: [''], // Corrigez le nom de l'attribut "adress" en "address"
+      adress: [''], // Corrigez le nom de l'attribut "adress" en "address"
       birthDate: [''],
       actif: [false], // Utilisez un booléen pour actif
       gsm: [''],
@@ -66,20 +70,17 @@ export class HomeComponent implements OnInit{
     this.getUser();
 
   }
-
-  // userForm: FormGroup = this.fb.group({
-  //   first_name: [''],
-  //   last_name: [''],
-  //   gender: [''],
-  //   email: [''],
-  //   adress: [''],
-  //   birthDate: [''],
-  //   actif: [''],
-  //   gsm: [''],
-  //   grade: [''],
-  //   status: [''],
-  // });
+  //Declaration de l'url
   apiUrl = 'http://localhost:3001';
+  //Logout
+  doLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['auth/login']);
+    console.log('logout');
+  }
+
+
+  //Liste tous les utilisateurs
   getUser() {
     return this.httpClient.get(this.apiUrl + '/user').subscribe({
       next: (data) => {
@@ -91,12 +92,12 @@ export class HomeComponent implements OnInit{
       },
     });
   }
-
-  getRole() {
-    return this.httpClient.get(this.apiUrl + '/role').subscribe({
+  //Liste les programmes
+  getProgram() {
+    return this.httpClient.get(this.apiUrl + '/program').subscribe({
       next: (data) => {
-        this.roles = data as [];
-        console.log('role', this.role);
+        this.programs = data as [];
+        console.log('program', this.program);
       },
       error: (err) => {
         console.log(err);
@@ -105,25 +106,21 @@ export class HomeComponent implements OnInit{
   }
 
 
-  getTeam() {
-    return this.httpClient.get(this.apiUrl + '/role').subscribe({
-      next: (data) => {
-        this.roles = data as [];
-        console.log('role', this.role);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  // getTeam() {
+  //   return this.httpClient.get(this.apiUrl + '/role').subscribe({
+  //     next: (data) => {
+  //       this.roles = data as [];
+  //       console.log('role', this.role);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 
 
 
-  doLogout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['auth/login']);
-    console.log('logout');
-  }
+
 
   getUserById(u:any){
     this.userService.getUserById(u.id).subscribe({
@@ -171,88 +168,86 @@ export class HomeComponent implements OnInit{
         this.userList = data;
         this.showUserList = !this.showUserList;
         this.showTeamList = false;
-        this.showCreateUserDiv=false;
-        if(this.showUser===true){
+        //this.showCreateUserDiv=false;
+          if(this.showCreateUserDiv===true){
           this.showUserList=false
           this.showUser=false;
-          this.showCreateUserDiv=false;
+          // this.showCreateUserDiv=false;
+          // this.showCreateUserDiv=false;
         }
+        // if(this.showUser===true){
+        //   this.showUserList=false
+        //   this.showUser=false;
+        //   this.showCreateUserDiv=false;
+        //   this.showCreateUserDiv=false;
+        // }
       });
   }
 
 
 
-  // ...
+  //Show Programm
 
-  showRoles() {
-    console.log('Roles');
+  showPrograms() {
+    console.log('Programs');
     this.httpClient
-      .get<any[]>('http://localhost:3001/role')
+      .get<any[]>('http://localhost:3001/program')
       .subscribe((data) => {
         // Assurez-vous que 'data' contient les données réelles des rôles
-        this.roleList = data;
-        console.log('Roles', this.roleList);
-        this.showRoleList = true;
+        this.programList = data;
+        console.log('Roles', this.programList);
+        this.showProgramList = true;
         this.showUserList = false;
         this.showCreateUserDiv=false;
       });
   }
 
-  showTeams() {
-    this.httpClient
-    .get<any[]>('http://localhost:3001/team')
-    .subscribe((data) => {
-      // Assurez-vous que 'data' contient les données réelles des rôles
-      this.teamList = data;
-      console.log('Team', this.teamList);
-      this.showTeamList = true;
-      this.showRoleList = false;
-      this.showUserList = false;
-      this.showCreateUserDiv=false;
-    });
-  }
+  // showTeams() {
+  //   this.httpClient
+  //   .get<any[]>('http://localhost:3001/team')
+  //   .subscribe((data) => {
+  //     // Assurez-vous que 'data' contient les données réelles des rôles
+  //     this.teamList = data;
+  //     console.log('Team', this.teamList);
+  //     this.showTeamList = true;
+  //     this.showRoleList = false;
+  //     this.showUserList = false;
+  //     this.showCreateUserDiv=false;
 
+
+
+  //   });
+  // }
+
+  // showCours() {
+  //   this.httpClient
+  //   .get<any[]>('http://localhost:3001/cour')
+  //   .subscribe((data) => {
+  //     // Assurez-vous que 'data' contient les données réelles des rôles
+  //     this.courList = data;
+  //     console.log('Team', this.courList);
+
+  //     this.showCourList = true;
+  //     this.showTeamList = false;
+  //     this.showRoleList = false;
+  //     this.showUserList = false;
+  //     this.showCreateUserDiv=false;
+  //   });
+  // }
 
 
   showCreateUser(){
+
     this.showCreateUserDiv=true;
     console.log('Hi')
 
   }
 
-  // async submit() {
-  //   console.log('user / submit', this.userForm.value);
 
-  //   this.userService.createUser(this.userForm.value)
-  //     .subscribe(
-  //       (res) => {
-  //         console.log('Réponse du serveur :', res);
-  //         this.response$ = res; // Si vous avez besoin de stocker la réponse
-  //       },
-  //       (error) => {
-  //         console.error('Une erreur s\'est produite lors de la requête :', error);
-  //         // Traitez l'erreur comme vous le souhaitez ici
-  //       }
-  //     );
-  //   }
 
 
   createUser() {
-    console.log('Hi create user')
-    if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      this.userService.createUser(this.userForm.value).subscribe(
-        (res) => {
-          console.log('Réponse du serveur :', res);
-          // Réinitialisez le formulaire après la création réussie
-          this.userForm.reset();
-          // Vous pouvez également afficher un message de succès à l'utilisateur ici
-        },
-        (error) => {
-          console.error('Une erreur s\'est produite lors de la requête :', error);
-          // Traitez l'erreur comme vous le souhaitez ici
-        }
-      );
-    }
+    //
+    this.router.navigateByUrl('/user-new')
   }
   }

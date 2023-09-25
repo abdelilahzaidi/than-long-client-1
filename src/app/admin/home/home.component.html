@@ -17,31 +17,7 @@
       type="button"
       class="btn btn-primary"
       style="margin-bottom: 2px"
-      (click)="showRoles()"
-    >
-      Roles
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      style="margin-bottom: 2px"
-      (click)="showTeams()"
-    >
-      Équipes
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      style="margin-bottom: 2px"
-      (click)="showUsers()"
-    >
-      Cours
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      style="margin-bottom: 2px"
-      (click)="showUsers()"
+      (click)="showPrograms()"
     >
       Programmes
     </button>
@@ -49,25 +25,49 @@
       type="button"
       class="btn btn-primary"
       style="margin-bottom: 2px"
+      (click)="showPrograms()"
+    >
+      Horaires
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="margin-bottom: 2px"
+      (click)="showPrograms()"
+    >
+      Lieux
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="margin-bottom: 2px"
+      (click)="showPrograms()"
+    >
+      Seances
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="margin-bottom: 2px"
       (click)="showUsers()"
     >
-      Grades
+      Abonnements
     </button>
     <button
       type="button"
       class="btn btn-primary"
       style="margin-bottom: 2px"
-      (click)="showRoles()"
+      (click)="showPrograms()"
     >
-      Periodes
+      Factures
     </button>
     <button
       type="button"
       class="btn btn-primary"
       style="margin-bottom: 2px"
-      (click)="showTeams()"
+      (click)="showPrograms()"
     >
-      Tâches
+      Présence
     </button>
     <!-- ... Ajoutez des gestionnaires d'événements pour d'autres boutons ... -->
   </div>
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <div *ngIf="showRoleList">
+      <div *ngIf="showProgramList">
         <div class="card">
           <div class="card-header">Liste des rôles</div>
           <div class="card-body">
@@ -109,8 +109,8 @@
               <!-- Contenu de la liste des rôles -->
 
               <tbody>
-                <tr *ngFor="let role of roleList">
-                  <td>{{ role.name }}</td>
+                <tr *ngFor="let program of programList">
+                  <td>{{ program.title }}</td>
                 </tr>
               </tbody>
             </table>
@@ -118,14 +118,14 @@
         </div>
       </div>
 
-      <div *ngIf="showTeamList">
+     <div *ngIf="showTeamList">
         <div class="card">
           <div class="card-header">Liste des équipes</div>
           <div class="card-body">
             <table class="table table-striped-columns m-1">
               <!-- Contenu de la liste des équipes -->
 
-              <tbody>
+               <tbody>
                 <tr *ngFor="let team of teamList">
                   <td>{{ team.name }}</td>
                 </tr>
@@ -134,8 +134,29 @@
           </div>
         </div>
       </div>
+
+      <div *ngIf="showCourList">
+        <div class="card">
+          <div class="card-header">Liste des équipes</div>
+          <div class="card-body">
+            <table class="table table-striped-columns m-1">
+              <!-- Contenu de la liste des équipes -->
+
+               <tbody>
+                <tr *ngFor="let cour of courList">
+                  <td>{{ cour.contenu }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+
+
 
   <div style="flex-grow: 3">
     <div class="navbar navbar-dark">
@@ -150,7 +171,7 @@
       >
         <ul class="navbar-nav" style="margin-left: 40px">
           <li class="nav-item">
-            <a routerLink="/admin/products" class="nav-link"
+            <a  class="nav-link"
               >Bonjour {{ user.first_name }} {{ user.last_name }}
             </a>
           </li>
@@ -218,6 +239,7 @@
                         class="form-control"
                         id="last_name"
                         placeholder="Email"
+                        formControlName="email"
                       />
                     </div>
                     <div class="mb-3">
@@ -243,8 +265,9 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="address"
-                        placeholder="address"
+                        id="adress"
+                        placeholder="adress"
+                        formControlName="adress"
                       />
                     </div>
                   </div>
@@ -287,10 +310,10 @@
                         required
                       >
                         <option selected disabled value="">Choose...</option>
-                        <option value="0 CAP" id="grade" for="grade">
+                        <option value="1" id="grade" for="grade">
                           0 cap
                         </option>
-                        <option value="1er CAP" id="grade" for="grade">
+                        <option value="2" id="grade" for="grade">
                           1er cap
                         </option>
                       </select>
