@@ -1,30 +1,160 @@
+
+
 <div class="container mt-3">
   <div class="card col-md-6 offset-3">
     <div class="card-body text-danger" *ngIf="errorMessage" >{{errorMessage}}</div>
     <div class="card-body" *ngIf="userEditForm">
     <form [formGroup]="userEditForm" (ngSubmit)="handleUpdateUser()">
-      <!--
-      <div class="mb-3">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-1">
+            <input
+              type="text"
+              class="form-control"
+              id="first_name"
+              name="first_name"
+              placeholder="Nom"
+              formControlName="first_name"
+            />
+          </div>
+          <div class="mb-1">
+            <input
+              type="text"
+              class="form-control"
+              id="last_name"
+              placeholder="Prénom"
+              formControlName="last_name"
+            />
+          </div>
+          <div class="mb-1">
+            <input
+              type="text"
+              class="form-control"
+              id="last_name"
+              placeholder="Email"
+              formControlName="email"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Genre</label>
+            <select
+              for="gender"
+              class="form-select"
+              id="gender"
+              formControlName="gender"
 
-        <label class="form-label">Id : {{productId}}</label>
+              required
+            >
+              <option selected disabled value="">Choose...</option>
+              <option value="male" id="gender" for="gender">
+                Male
+              </option>
+              <option value="female" id="gender" for="gender">
+                Female
+              </option>
+            </select>
+          </div>
+          <div class="mb-1">
+            <input
+              type="text"
+              class="form-control"
+              id="adress"
+              placeholder="adress"
+              formControlName="adress"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-1">
+            <input
+              type="date"
+              class="form-control"
+              id="birthDate"
+              formControlName="birthDate"
+              placeholder="Date de naissance"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-check-label" for="actif">
+              Actif
+            </label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="iactif" formControlName="actif" required>
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <input
+              type="text"
+              class="form-control"
+              id="status"
+              formControlName="gsm"
+              placeholder="GSM"
+            />
+          </div>
+
+          <div class="mb-1">
+            <label class="form-label" for="grade">Grade</label>
+            <select
+              class="form-select"
+              id="grade"
+              for="grade"
+              formControlName="grade"
+              required
+            >
+              <option selected disabled value="">Choose...</option>
+              <option value="1" id="grade" for="grade">
+                0 cap
+              </option>
+              <option value="2" id="grade" for="grade">
+                1er cap
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-1">
+            <label class="form-label">Status</label>
+            <select
+              for="status"
+              class="form-select"
+              id="status"
+              formControlName="status"
+              required
+            >
+              <option selected disabled value="">Choose...</option>
+              <option value="admin" id="status" for="status">
+                Admin
+              </option>
+              <option value="member" id="status" for="status">
+                Member
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Name:</label>
-        <input type="text" formControlName="name" class="form-control">
+      <div class="d-flex justify-content-center align-items-center">
+        <div style="display: flex">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-bs-container="body"
+            data-bs-toggle="popover"
+            data-bs-placement="bottom"
+            data-bs-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+            data-bs-original-title="Popover Title"
+            aria-describedby="popover344544"
+
+          >
+            Modifier
+          </button>
+        </div>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Price :</label>
-        <input type="text" formControlName="price" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Id :</label>
-        <input type="checkbox" formControlName="promotion" class="form-check">
-      </div>
-      <div class="d-grid">
-        <button class="btn btn-success">Update</button>
-      </div>
-      -->
+      
     </form>
     </div>
   </div>
 </div>
+
+
+
+

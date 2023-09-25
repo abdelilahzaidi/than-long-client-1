@@ -27,12 +27,13 @@ export class UserService {
   }
 
 
- updateUser(id: any, product: any) {
-  return this.http.patch(this.apiUrl + '/user/' + id, product)
+ updateUser(id: any, user: any) {
+  console.log('id',id)
+  return this.http.put(this.apiUrl + '/user/' + id, {...user, grade: parseInt(user.grade)})
 }
 createUser(user: any) {
   console.log('In service angular',user)
-  return this.http.post<any>(this.apiUrl+'/user',user)
+  return this.http.post<any>(this.apiUrl+'/user',{...user, grade: parseInt(user.grade)})
     .pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('Une erreur s\'est produite lors de la requête :', error);

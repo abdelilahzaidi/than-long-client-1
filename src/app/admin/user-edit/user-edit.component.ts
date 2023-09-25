@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../service/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { fUserEdit } from './edit.form';
 
 @Component({
   selector: 'app-user-edit',
@@ -11,40 +13,27 @@ export class UserEditComponent implements OnInit {
   user :any
   response$: any;
   errorMessage: any;
-  constructor(private fb: FormBuilder, private userService: UserService) {}
-  userEditForm: FormGroup = this.fb.group({
-    first_name: [''],
-    last_name: [''],
-    gender: [''],
-    email: [''],
-    adress: [''],
-    birthDate: [''],
-    actif: [''],
-    gsm: [''],
-    grade: [''],
-    status: [''],
-  });
-  ngOnInit() {}
+  userEditForm: FormGroup = fUserEdit({})
 
-  // async submit() {
-  //   console.log('user / submit', this.userForm.value);
-
-  //   this.userService.createUser(this.userForm.value).subscribe(
-  //     (res) => {
-  //       console.log('Réponse du serveur :', res);
-  //       this.response$ = res; // Si vous avez besoin de stocker la réponse
-  //     },
-  //     (error) => {
-  //       console.error("Une erreur s'est produite lors de la requête :", error);
-  //       // Traitez l'erreur comme vous le souhaitez ici
-  //     }
-  //   );
-  // }
+  constructor(private userService: UserService, private router :Router, private $route: ActivatedRoute) {
+    
+  }
+ 
+  ngOnInit() {
+    this.$route.data.subscribe(({user}) => {
+      this.user = user ;
+      this.userEditForm = fUserEdit(user)
+    })
+  }
 
   handleUpdateUser() {
+    console.log(this.user)
     this.userService.updateUser(this.user.id,this.userEditForm.value).subscribe({
       next : (data)=>{
-        alert("Product has been successfully updated");
+        
+        this.response$ = data;
+        this.router.navigate(['admin-home']);
+        alert("User has been successfully updated");
       }, error : err => {
         this.errorMessage=err;
       }

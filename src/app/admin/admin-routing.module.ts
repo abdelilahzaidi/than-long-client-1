@@ -7,13 +7,14 @@ import { UserComponent } from './user/user.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { UsersComponent } from '../users/users.component';
 import { AuthGuardAdmin } from '../guards/auth-admin.guard';
+import { userResolver } from './user-edit/user.resolver';
 
 const routes: Routes = [
   {path:'admin-home',component:HomeComponent,canActivate: [AuthGuardAdmin]},
   {path:'user-new',component:UserNewComponent},
   {path:'user',component:UserComponent, canActivate: [AuthGuard]},
   {path:'users',component:UsersComponent, canActivate: [AuthGuard]},
-  {path:'user-edit',component:UserEditComponent}
+  {path:'user-edit/:id',component:UserEditComponent, resolve: { user: userResolver() }}
 
 ];
 

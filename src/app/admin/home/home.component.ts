@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit {
 
   handleEditUser(u: any) {
     console.log(u.id);
-    this.router.navigateByUrl('user-edit');
+    this.router.navigate(['/user-edit', u.id]);
   }
   showUsers() {
     this.httpClient
@@ -155,20 +155,9 @@ export class HomeComponent implements OnInit {
         // Assurez-vous que 'data' contient les données réelles des utilisateurs
         this.userList = data;
         this.showUserList = !this.showUserList;
+        this.showProgramList = false;
         this.showTeamList = false;
-        //this.showCreateUserDiv=false;
-        if (this.showCreateUserDiv === true) {
-          this.showUserList = false
-          this.showUser = false;
-          // this.showCreateUserDiv=false;
-          // this.showCreateUserDiv=false;
-        }
-        // if(this.showUser===true){
-        //   this.showUserList=false
-        //   this.showUser=false;
-        //   this.showCreateUserDiv=false;
-        //   this.showCreateUserDiv=false;
-        // }
+        console.log('List users',this.showUserList, )     
       });
   }
 
@@ -190,43 +179,17 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  // showTeams() {
-  //   this.httpClient
-  //   .get<any[]>('http://localhost:3001/team')
-  //   .subscribe((data) => {
-  //     // Assurez-vous que 'data' contient les données réelles des rôles
-  //     this.teamList = data;
-  //     console.log('Team', this.teamList);
-  //     this.showTeamList = true;
-  //     this.showRoleList = false;
-  //     this.showUserList = false;
-  //     this.showCreateUserDiv=false;
 
-
-
-  //   });
-  // }
-
-  // showCours() {
-  //   this.httpClient
-  //   .get<any[]>('http://localhost:3001/cour')
-  //   .subscribe((data) => {
-  //     // Assurez-vous que 'data' contient les données réelles des rôles
-  //     this.courList = data;
-  //     console.log('Team', this.courList);
-
-  //     this.showCourList = true;
-  //     this.showTeamList = false;
-  //     this.showRoleList = false;
-  //     this.showUserList = false;
-  //     this.showCreateUserDiv=false;
-  //   });
-  // }
 
 
   showCreateUser() {
 
-    this.showCreateUserDiv = true;
+    if(this.showUser===false){
+      this.showCreateUserDiv = true;
+      console.log('Show create Div if', this.showCreateUserDiv)
+    }
+    else this.showCreateUserDiv = false;
+    console.log('Show create Div else', this.showCreateUserDiv)
     console.log('Hi')
 
   }
