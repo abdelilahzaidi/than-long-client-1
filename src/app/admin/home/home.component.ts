@@ -9,14 +9,14 @@ import { UserService } from '../service/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
-  showCourList=false
-  showUser=false;
+  showCourList = false
+  showUser = false;
   showUserList = false;
   showTeamList = false;
   showProgramList = false;
-  showCreateUserDiv=false;
+  showCreateUserDiv = false;
   // Déclarez des tableaux pour stocker les données des utilisateurs, des équipes, etc.
   userList: string[] = [];
   teamList: any[] = [];
@@ -106,30 +106,18 @@ export class HomeComponent implements OnInit{
   }
 
 
-  // getTeam() {
-  //   return this.httpClient.get(this.apiUrl + '/role').subscribe({
-  //     next: (data) => {
-  //       this.roles = data as [];
-  //       console.log('role', this.role);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
 
 
 
 
-
-  getUserById(u:any){
+  getUserById(u: any) {
     this.userService.getUserById(u.id).subscribe({
       next: (data) => {
-        this.user=data
+        this.user = data
         //this.showUser =!this.showUser;
-        console.log("id",this.user.id," ",u.id)
-        if(!this.user.id !==u.id){
-          this.showUser =true;
+        console.log("id", this.user.id, " ", u.id)
+        if (!this.user.id !== u.id) {
+          this.showUser = true;
         }
       },
       error: (err) => {
@@ -169,9 +157,9 @@ export class HomeComponent implements OnInit{
         this.showUserList = !this.showUserList;
         this.showTeamList = false;
         //this.showCreateUserDiv=false;
-          if(this.showCreateUserDiv===true){
-          this.showUserList=false
-          this.showUser=false;
+        if (this.showCreateUserDiv === true) {
+          this.showUserList = false
+          this.showUser = false;
           // this.showCreateUserDiv=false;
           // this.showCreateUserDiv=false;
         }
@@ -198,7 +186,7 @@ export class HomeComponent implements OnInit{
         console.log('Roles', this.programList);
         this.showProgramList = true;
         this.showUserList = false;
-        this.showCreateUserDiv=false;
+        this.showCreateUserDiv = false;
       });
   }
 
@@ -236,9 +224,9 @@ export class HomeComponent implements OnInit{
   // }
 
 
-  showCreateUser(){
+  showCreateUser() {
 
-    this.showCreateUserDiv=true;
+    this.showCreateUserDiv = true;
     console.log('Hi')
 
   }
@@ -247,7 +235,25 @@ export class HomeComponent implements OnInit{
 
 
   createUser() {
-    //
-    this.router.navigateByUrl('/user-new')
+    console.log('Hi create user')
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      this.userService.createUser(this.userForm.value).subscribe(
+        (res) => {
+          console.log('Réponse du serveur :', res);
+          // Réinitialisez le formulaire après la création réussie
+          this.userForm.reset();
+          // Vous pouvez également afficher un message de succès à l'utilisateur ici
+          
+        },
+        (error) => {
+          console.error('Une erreur s\'est produite lors de la requête :', error);
+          // Traitez l'erreur comme vous le souhaitez ici
+        }
+      );
+    }
+          this.router.navigateByUrl('/admin-home')
+          this.showCreateUserDiv = false;
+
   }
-  }
+}
