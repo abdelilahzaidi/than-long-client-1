@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
+import { ProgramService } from '../service/program.service';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,27 @@ import { UserService } from '../service/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  showCourList = false
+  //User
   showUser = false;
   showUserList = false;
-  showTeamList = false;
-  showProgramList = false;
   showCreateUserDiv = false;
+  //end
+
+  
+
+
+
+  //Program
+  showProgram = false;
+  showProgarmList = false;
+  showCreateProgramDiv = false;
+  showProgramList = false;
+  //end
+
+  showCourList = false
+  showTeamList = false;
+ 
+
   // Déclarez des tableaux pour stocker les données des utilisateurs, des équipes, etc.
   userList: string[] = [];
   teamList: any[] = [];
@@ -33,6 +49,7 @@ export class HomeComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private userService: UserService,
+    private programService: ProgramService,
     private router: Router
   ) {
     this.userForm = this.fb.group({
@@ -50,14 +67,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-
-
-
-
-
-
-
-
   response$: any;
 
   currentAction!: string;
@@ -68,9 +77,11 @@ export class HomeComponent implements OnInit {
         this.user = data;
       });
     this.getUser();
-
+   
   }
-  //Declaration de l'url
+
+
+  //Declaration de l'uri
   apiUrl = 'http://localhost:3001';
   //Logout
   doLogout() {
@@ -80,35 +91,45 @@ export class HomeComponent implements OnInit {
   }
 
 
-  //Liste tous les utilisateurs
-  getUser() {
-    return this.httpClient.get(this.apiUrl + '/user').subscribe({
-      next: (data) => {
-        this.users = data as [];
-        console.log('user', this.user);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+
+
+  ///Partie user
+
+  createUser() {
+    console.log('Hi create user')
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      this.userService.createUser(this.userForm.value).subscribe(
+        (res) => {
+          console.log('Réponse du serveur :', res);
+          // Réinitialisez le formulaire après la création réussie
+          this.userForm.reset();
+          // Vous pouvez également afficher un message de succès à l'utilisateur ici
+
+        },
+        (error) => {
+          console.error('Une erreur s\'est produite lors de la requête :', error);
+          // Traitez l'erreur comme vous le souhaitez ici
+        }
+      );
+    }
+    this.router.navigateByUrl('/admin-home')
+    this.showCreateUserDiv = false;
+
   }
-  //Liste les programmes
-  getProgram() {
-    return this.httpClient.get(this.apiUrl + '/program').subscribe({
-      next: (data) => {
-        this.programs = data as [];
-        console.log('program', this.program);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+
+
+  showCreateUser() {
+
+    if (this.showUser === false) {
+      this.showCreateUserDiv = true;
+      console.log('Show create Div if', this.showCreateUserDiv)
+    }
+    else this.showCreateUserDiv = false;
+    console.log('Show create Div else', this.showCreateUserDiv)
+    console.log('Hi')
+
   }
-
-
-
-
-
 
   getUserById(u: any) {
     this.userService.getUserById(u.id).subscribe({
@@ -124,9 +145,7 @@ export class HomeComponent implements OnInit {
         this.errorMessage = err.error;
       },
     })
-    console.log("Hello")
-
-
+    console.log("Hello user")
   }
 
   handleDeleteUser(u: any) {
@@ -157,11 +176,44 @@ export class HomeComponent implements OnInit {
         this.showUserList = !this.showUserList;
         this.showProgramList = false;
         this.showTeamList = false;
-        console.log('List users',this.showUserList, )     
+
+        console.log('List users', this.showUserList,)
       });
   }
 
+  //Liste tous les utilisateurs
+  getUser() {
+    return this.httpClient.get(this.apiUrl + '/user').subscribe({
+      next: (data) => {
+        this.users = data as [];
+        console.log('user', this.user);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
+  //End partie user
+
+
+
+
+
+  //Partie programme
+
+  //Liste les programmes
+  // getProgram() {
+  //   return this.httpClient.get(this.apiUrl + '/program').subscribe({
+  //     next: (data) => {
+  //       this.programs = data as [];
+  //       console.log('program', this.program);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 
   //Show Programm
 
@@ -172,51 +224,34 @@ export class HomeComponent implements OnInit {
       .subscribe((data) => {
         // Assurez-vous que 'data' contient les données réelles des rôles
         this.programList = data;
-        console.log('Roles', this.programList);
+        console.log('Programmes', this.programList);
         this.showProgramList = true;
         this.showUserList = false;
         this.showCreateUserDiv = false;
       });
   }
 
+  getProgramById(p: any) {
+    console.log("Un prog")
+    this.programService.getprogramById(p.id).subscribe({
+      next: (data) => {
+        this.program = data
+        console.log("PROGRAM", data, this.showProgram)
+        this.showProgram = !this.showProgram;
+        console.log("program id", this.program.id, " ", p.id)
+        console.log("program bool", this.showProgram)
+    
+       },
+      error: (err) => {
+        this.errorMessage = err.error;
+      },
+    })
+    console.log("Show Program",this.showProgram)
 
-
-
-  showCreateUser() {
-
-    if(this.showUser===false){
-      this.showCreateUserDiv = true;
-      console.log('Show create Div if', this.showCreateUserDiv)
-    }
-    else this.showCreateUserDiv = false;
-    console.log('Show create Div else', this.showCreateUserDiv)
-    console.log('Hi')
 
   }
 
 
-
-//à verifier
-  createUser() {
-    console.log('Hi create user')
-    if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      this.userService.createUser(this.userForm.value).subscribe(
-        (res) => {
-          console.log('Réponse du serveur :', res);
-          // Réinitialisez le formulaire après la création réussie
-          this.userForm.reset();
-          // Vous pouvez également afficher un message de succès à l'utilisateur ici
-          
-        },
-        (error) => {
-          console.error('Une erreur s\'est produite lors de la requête :', error);
-          // Traitez l'erreur comme vous le souhaitez ici
-        }
-      );
-    }
-          this.router.navigateByUrl('/admin-home')
-          this.showCreateUserDiv = false;
-
-  }
+  
+    //End partie programme
 }

@@ -8,6 +8,8 @@ import { AuthGuard } from '../guards/auth.guard';
 import { UsersComponent } from '../users/users.component';
 import { AuthGuardAdmin } from '../guards/auth-admin.guard';
 import { userResolver } from './user-edit/user.resolver';
+import { AdminComponent } from './container/admin.component';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   {path:'admin-home',component:HomeComponent,canActivate: [AuthGuardAdmin]},
@@ -17,6 +19,13 @@ const routes: Routes = [
   {path:'user-edit/:id',component:UserEditComponent, resolve: { user: userResolver() }}
 
 ];
+
+// const routes: Routes = [
+//   { path: 'admin', component: AdminComponent, children: [
+//     {path: 'user-new', component: UserNewComponent },
+//     { path: 'user-new', component: MenuComponent, outlet: 'menu' }
+//   ] },
+// ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
